@@ -9,30 +9,20 @@ namespace Microsoft.IdentityModel.Logging
     public class LogHelper
     {
         /// <summary>
-        /// Logs an error using the event source logger and throws an exception if the throwException is set to true.
+        /// Logs an event using the event source logger and throws the exception.
         /// </summary>
         /// <param name="message">message to log.</param>
-        /// <param name="exceptionType">Type of the exception to be thrown</param>
-        /// <param name="exception">Exception parameter to be passed to the exception thrown.</param>
-        /// <param name="innerException">the inner <see cref="Exception"/> to be added to the outer exception</param>
-        public static void Throw(string message, Type exceptionType, EventLevel logLevel, Exception innerException = null, bool throwException = true)
+        /// <param name="exceptionType">Type of the exception to be thrown.</param>
+        /// <param name="logLevel">Identifies the level of an event to be logged. Default is Error.</param>
+        /// <param name="innerException">the inner <see cref="Exception"/> to be added to the outer exception.</param>
+        public static void Throw(string message, Type exceptionType, EventLevel logLevel = EventLevel.Error, Exception innerException = null)
         {
-            if (logLevel == EventLevel.Error)
-            {
-                IdentityModelEventSource.Logger.WriteError(message);
-            }
-            else if (logLevel == EventLevel.Verbose)
-            {
-                IdentityModelEventSource.Logger.WriteVerbose(message);
-            }
+            IdentityModelEventSource.Logger.Write(logLevel, message, innerException);
 
-            if (throwException)
-            {
-                if (innerException != null)
-                    throw (Exception)Activator.CreateInstance(exceptionType, message, innerException);
-                else
-                    throw (Exception)Activator.CreateInstance(exceptionType, message);
-            }
+            if (innerException != null)
+                throw (Exception)Activator.CreateInstance(exceptionType, message, innerException);
+            else
+                throw (Exception)Activator.CreateInstance(exceptionType, message);
         }
     }
 }

@@ -503,5 +503,6 @@ namespace System.IdentityModel.Test
                 Assert.False(principal.IsInRole(unexpectedRoles[i]));
             }
         }
+
     }
 }

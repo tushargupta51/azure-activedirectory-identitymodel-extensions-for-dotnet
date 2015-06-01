@@ -105,8 +105,8 @@ namespace System.IdentityModel.Test
                 new Claim( ClaimsIdentity.DefaultNameClaimType, "Jean-Sébastien", ClaimValueTypes.String, DefaultIssuer, DefaultOriginalIssuer ),
                 new Claim( "role", "role1", ClaimValueTypes.String, DefaultIssuer, DefaultOriginalIssuer),
                 new Claim( "roles", "roles1", ClaimValueTypes.String, DefaultIssuer, DefaultOriginalIssuer),
-            };
 
+            };
 
             _globalClaims = new List<Claim>()
             {
